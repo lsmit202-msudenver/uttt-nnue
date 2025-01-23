@@ -1,0 +1,32 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cpptools"
+        , "ms-vscode.cmake"
+        // , "ms-vscode.cpptools-extension-pack"
+				// , "ms-vscode.cpptools-themes"
+				// , "ms-vscode.cmake-tools"
+			  // , "twxs.cmake"
+        
+      ]
+    }
+  },
+  "settings": {
+    "extensions.ignoreRecommendations": true,
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.shell.linux": "/bin/zsh",
+    "terminal.integrated.shellArgs.linux": [ "-l", "-i"],
+    "clangd.path": "clangd",
+    "clang-format.executable": "clang-format",
+    "cmake.cmakePath": "cmake",
+    "cmake.ctestPath": "ctest",
+    "cmake.generator": "Ninja",
+    "cmake.configureOnOpen": true,
+    "lldb.executable": "/usr/bin/lldb"
+  },
+  "remoteUser": "user"
+}
