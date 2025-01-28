@@ -2,7 +2,7 @@
 CXX ?= c++
 CXXFLAGS :=
 DBGFLAGS := -g
-OBJFLAGS := $(CFLAGS) -c
+OBJFLAGS := $(CXXFLAGS) -c
 
 # path macros
 BIN_PATH := build/bin
@@ -34,21 +34,21 @@ default: makedir all debug dist
 
 # non-phony targets
 $(TARGET): $(OBJ)
-	$(CC) -o $@ $(OBJ) $(CFLAGS)
+	$(CXX) -o $@ $(OBJ) $(CXXFLAGS)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.cpp*
-	$(CC) $(OBJFLAGS) -o $@ $<
+	$(CXX) $(OBJFLAGS) -o $@ $<
 
 $(DBG_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CC) $(OBJFLAGS) $(DBGFLAGS) -o $@ $<
+	$(CXX) $(OBJFLAGS) $(DBGFLAGS) -o $@ $<
 
 $(TARGET_DEBUG): $(OBJ_DEBUG)
-	$(CC) $(CFLAGS) $(DBGFLAGS) $(OBJ_DEBUG) -o $@
+	$(CXX) $(CXXFLAGS) $(DBGFLAGS) $(OBJ_DEBUG) -o $@
 
 
 .PHONY: makedir
 makedir:
-	@mkdir -p $(BIN_PATH) $(OBJ_PATH) $(DBG_PATH) $(DIST_PATH)
+	@mkdir -p $(BIN_PATH) $(OBJ_PATH) $(DBG_PATH)
 
 .PHONY: all
 all: $(TARGET)
@@ -65,26 +65,3 @@ clean:
 distclean:
 	@echo CLEAN $(DISTCLEAN_LIST)
 	@rm -f $(DISTCLEAN_LIST)
-
-
-# Access to additional python scripts
-VENV = .venv
-PYTHON = $(VENV)/bin/python3
-PIP = $(VENV)/bin/pip
-
-COMMANDS := $(foreach x, $(wildcard scripts/commands/*.py), $(notdir $(basename $(x))))
-PYCLEAN_LIST := scripts/commands/__pycache__
-
-$(VENV):
-	python -m venv $(VENV)
-
-setup:
-	$(PIP) install --upgrade -r scripts/requirements.txt
-
-$(COMMANDS): $(VENV)/bin/activate
-	@mkdir -p build/dist
-	$(PYTHON) scripts/run.py $@
-
-pyclean:
-	@echo CLEAN $(PYCLEAN_LIST)
-	@rm -rf $(PYCLEAN_LIST)
