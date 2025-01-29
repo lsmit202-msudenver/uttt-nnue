@@ -35,4 +35,3 @@ struct Agent {
   int _traverse(int);
   int _evaluate();
 };
-

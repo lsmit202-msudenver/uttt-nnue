@@ -2,9 +2,7 @@
 
 #include "action.h"
 
-struct BoardStateProperty
-{
-
+struct BoardStateProperty {
   int wins = 0;
   int losses = 0;
   int draws = 0;
@@ -18,8 +16,7 @@ struct BoardStateProperty
   bool isOver = false;
 };
 
-struct State
-{
+struct State {
   int boards[10] = {9841, 9841, 9841, 9841, 9841, 9841, 9841, 9841, 9841, 9841};
   int playerToMove = 0;
   int boardToPlay = -1;

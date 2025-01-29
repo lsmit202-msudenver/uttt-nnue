@@ -1,26 +1,24 @@
-#include "globals.h"
-#include "data.h"
 #include <chrono>
 #include <iostream>
+
+#include "data.h"
+#include "globals.h"
 
 using namespace std;
 
 #include "agent.h"
 #include "state.h"
 
-#define TIME_LEFT                                                              \
-  duration_cast<milliseconds>(steady_clock::now() - start).count()
+#define TIME_LEFT duration_cast<milliseconds>(steady_clock::now() - start).count()
 
 const int INF = -16535;
 
-const int wins[8][3] = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6},
-                        {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
+const int wins[8][3] = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
 void visit(int);
 void loadPrecomputed();
 
-Agent::Agent() { 
-
+Agent::Agent() {
   loadPrecomputed();
 
   visit(9841);
@@ -70,8 +68,7 @@ Action Agent::selectAction(steady_clock::time_point start, int timeout) {
 }
 
 int Agent::_traverse(int depth) {
-  if (depth == 0 || gameState.isOver)
-    return _evaluate();
+  if (depth == 0 || gameState.isOver) return _evaluate();
 
   int actionCount = gameState.generateMoves(actions[depth]);
 
@@ -92,11 +89,9 @@ int Agent::_traverse(int depth) {
 int Agent::_evaluate() { return 1; }
 
 void loadPrecomputed() {
-  for(auto &state : endGames) {
+  for (auto &state : endGames) {
     cache[state].isOver = true;
   }
 }
 
-void visit(int state) {
-  auto &entry = cache[state];
-}
+void visit(int state) { auto &entry = cache[state]; }
